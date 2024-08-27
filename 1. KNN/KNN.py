@@ -8,6 +8,7 @@ def euclidian_distance(point1, point2):
     return np.linalg.norm(point1 - point2)
 
 
+
 # actual knn implementation
 def knn(X_train, Y_train, query_point, k):
     distances = []
