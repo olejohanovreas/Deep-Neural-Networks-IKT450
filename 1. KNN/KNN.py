@@ -8,7 +8,6 @@ def euclidian_distance(point1, point2):
     return np.linalg.norm(point1 - point2)
 
 
-
 # actual knn implementation
 def knn(X_train, Y_train, query_point, k):
     distances = []
@@ -49,7 +48,7 @@ def evaluate_knn(X_train, Y_train, X_val, Y_val, k):
 
         squared_errors += (predict_label - actual_label) ** 2
 
-    #calculating metrics
+    # calculating metrics
     accuracy = (TP + TN) / (TP + TN + FP + FN)
     precision = TP / (TP + FP) if (TP + FP) != 0 else 0
     recall = TP / (TP + FN) if (TP + FN) != 0 else 0
@@ -62,7 +61,7 @@ def evaluate_knn(X_train, Y_train, X_val, Y_val, k):
     print(f"Recall: {recall:.4f}")
     print(f"F1 Score: {f1_score:.4f}")
     print(f"MSE: {mse:.4f}")
-    print(f"Confusion Matrix: TP={TP}, TN={TN}, FP={FP}, FN={FN}")
+    print(f"Confusion Matrix: \nTP={TP} TN={TN} \nFP={FP} FN={FN}")
 
     return accuracy, precision, recall, f1_score, mse, TP, TN, FP, FN
 
@@ -83,6 +82,8 @@ def knn_iterative(X_train, Y_train, X_val, Y_val, k_values):
         f1_scores.append(f1_score)
         mses.append(mse)
 
+    font = {'size': 22}
+    plt.rc('font', **font)
     plt.figure(figsize=(14, 8))
 
     plt.plot(k_values, accuracies, label="Accuracy")
@@ -106,7 +107,7 @@ if __name__ == '__main__':
     Y = dataset[:, -1]
 
     # shuffle dataset
-    np.random.seed(5678432)
+    np.random.seed(7)
     indices = np.random.permutation(len(X))
     X = X[indices]
     Y = Y[indices]
@@ -118,4 +119,4 @@ if __name__ == '__main__':
     Y_train, Y_val = Y[:split_index], Y[split_index:]
 
     # run the model
-    knn_iterative(X_train, Y_train, X_val, Y_val, range(1, 100))
+    knn_iterative(X_train, Y_train, X_val, Y_val, range(1, 300))
